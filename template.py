@@ -29,5 +29,5 @@ if __name__ == '__main__':
     data = aocd.get_data(year=year, day=day)
     solution = solve(data)
     print("Solution: ", solution, sep="\n")
-    aocd.submit(solution, year=year, day=day, part=part)
+    aocd.submit(solution, year=year, day=day, part=part, reopen=False)
 
