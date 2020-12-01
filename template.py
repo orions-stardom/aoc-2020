@@ -8,7 +8,7 @@ from pathlib import Path
 def solve(data):
     pass
 
-@pytest.mark.paramatrize('data,expect',
+@pytest.mark.parametrize('data,expect',
     # INSERT TEST CASES HERE
     [('test1', 'expect1'),
      ('test2', 'expect2')
