@@ -19,6 +19,10 @@ def test_solve(data, expect):
     assert solve(data) == expect
 
 if __name__ == '__main__':
+    if pytest.main([__file__]):
+        # follows shell exit code conventions - nonzero = Failure
+        sys.exit(1)
+
     # aocd's filename introspection doesn't fit my naming conventions
     f = Path(__file__).absolute()    
     year, day, part = parse("aoc-{:d}", f.parent.parent.name)[0], \
