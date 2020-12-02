@@ -1,7 +1,9 @@
 from dotenv import load_dotenv; load_dotenv()
 
 import aocd
-import pytest 
+import pytest
+import sys
+
 from parse import parse
 from pathlib import Path
 
