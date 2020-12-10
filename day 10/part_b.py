@@ -8,25 +8,22 @@ from parse import parse
 from pathlib import Path
 
 import functools
+import itertools as it
 
 @functools.lru_cache()
-def count_ways(all_available, target, i_most_recent):
-    most_recent = all_available[i_most_recent]
-    still_available = all_available[i_most_recent+1:]
-
-    if not still_available:
+def count_ways(available, most_recent):
+    # Recursively build up 'where can we go from here with what we have left'
+    # Since the target is always biggest adapter we have + 3, we always have to use the biggest adapter
+    # and our only end condition is when we've reached it
+    if not available:
         return 1
 
-    next_candidates = [i for i,c in enumerate(still_available, start=i_most_recent+1) if c - most_recent <= 3]
-    return sum(count_ways(all_available, target, i) for i in next_candidates)
+    return sum(count_ways(available[i+1:], c) for i,c in enumerate(it.takewhile((lambda c: c - most_recent <= 3), available)))
     
 
 def solve(data):
-    available = [0] + [int(l) for l in data.splitlines()]
-    available.sort()
-    target = max(available)+3
-
-    return count_ways(tuple(available), target, 0)
+    available = sorted(int(l) for l in data.splitlines())
+    return count_ways(tuple(available), 0)
 
 @pytest.mark.parametrize('data,expect',
     # INSERT TEST CASES HERE
