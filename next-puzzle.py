@@ -23,7 +23,7 @@ else:
         day = newest_day
         part = "b"
 
-target = cwd / f"day {day}" / f"part_{part}.py"
+target = cwd / f"day {day:02}" / f"part_{part}.py"
 target.parent.mkdir(exist_ok=True)
 
 copyfile(cwd / "template.py", target)
