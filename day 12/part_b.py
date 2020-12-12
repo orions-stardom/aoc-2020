@@ -7,40 +7,33 @@ import sys
 from parse import parse
 from pathlib import Path
 
-compass = {'N': (0,1), 'S': (0, -1), 'E': (1,0), 'W': (-1, 0)}
-turns = [(0,1), (1,0), (0,-1), (-1, 0)]
+import cmath
+import math
 
 def turn(waypoint, degrees):
-    # Turn waypoint about ship by degrees
-    nturns = degrees // 90
-    sign = 1 if degrees > 0 else -1
-    for _ in range(abs(nturns)):
-        waypoint = (-sign * waypoint[1], sign * waypoint[0])
-
-    return waypoint
+    rads = math.radians(degrees)    
+    r,phi = cmath.polar(waypoint)
+    return cmath.rect(r, phi+rads)
 
 def solve(data):
-    position = (0, 0)
-    waypoint = (10, 1) # Relative to ship
+    position = 0+0j
+    waypoint = 10+1j # Relative to ship
+
+    compass = {'N': 0+1j, 'S': 0-1j, 'E': 1+0j, 'W': -1+0j}
 
     for line in data.splitlines():
         move, amount = line[0], int(line[1:])
 
         if move in compass:
-            dx, dy = compass[move]
-            dx *= amount; dy *= amount
-            waypoint = (waypoint[0]+dx, waypoint[1]+dy)
+            waypoint += compass[move] * amount
         elif move == 'F':
-            # Ship moves to waypoint amount times
-            dx = waypoint[0] * amount
-            dy = waypoint[1] * amount
-            position = (position[0] + dx, position[1] + dy)
+            position += waypoint * amount
         elif move == 'L':
             waypoint = turn(waypoint, amount)
         elif move == 'R':
             waypoint = turn(waypoint, -amount)
 
-    return abs(position[0]) + abs(position[1])
+    return abs(position.real) + abs(position.imag)
             
 @pytest.mark.parametrize('data,expect',
 [('''F10

@@ -7,38 +7,34 @@ import sys
 from parse import parse
 from pathlib import Path
 
-compass = {'N': (0,1), 'S': (0, -1), 'E': (1,0), 'W': (-1, 0)}
-turns = [(0,1), (1,0), (0,-1), (-1, 0)]
+import math
+import cmath
+
+compass = {'N': 0+1j, 'S': 0-1j, 'E': 1+0j, 'W': -1+0j}
 
 def turn(bearing, degrees):
-    return turns[(turns.index(bearing) + degrees//90) % len(turns)]
-
+    r, phi = cmath.polar(bearing)
+    rads = math.radians(degrees)
+    return cmath.rect(r, phi+rads)
 
 def solve(data):
-    bearing = (1, 0) 
-    position = (0, 0)
+    bearing = 1+0j
+    position = 0+0j
 
     for line in data.splitlines():
         move, amount = line[0], int(line[1:])
 
         if move in compass:
-            dx, dy = compass[move]
-            dx *= amount; dy *= amount
+            position += compass[move] * amount
         elif move == 'F':
-            dx = bearing[0] * amount
-            dy = bearing[1] * amount
+            position += bearing * amount
         elif move == 'L':
-            dx = dy = 0
-            bearing = turn(bearing, -amount)
-        elif move == 'R':
-            dx = dy = 0
             bearing = turn(bearing, amount)
+        elif move == 'R':
+            bearing = turn(bearing, -amount)
 
-        position = (position[0]+dx, position[1]+dy)
-
-    return abs(position[0]) + abs(position[1])
+    return abs(position.real) + abs(position.imag)
             
-
 
 @pytest.mark.parametrize('data,expect',
 [('''F10
