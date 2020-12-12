@@ -10,24 +10,12 @@ from pathlib import Path
 compass = {'N': (0,1), 'S': (0, -1), 'E': (1,0), 'W': (-1, 0)}
 turns = [(0,1), (1,0), (0,-1), (-1, 0)]
 
-def sign(n):
-    # Integer sign
-    if n == 0:
-        return 0
-    if n < 0:
-        return -1
-    if n > 0:
-        return 1
-
 def turn(waypoint, degrees):
     # Turn waypoint about ship by degrees
     nturns = degrees // 90
-    if nturns > 0:
-        for _ in range(nturns):
-            waypoint = (-waypoint[1], waypoint[0])
-    else:
-        for _ in range(-nturns):
-            waypoint = (waypoint[1], -waypoint[0])
+    sign = 1 if degrees > 0 else -1
+    for _ in range(abs(nturns)):
+        waypoint = (-sign * waypoint[1], sign * waypoint[0])
 
     return waypoint
 
