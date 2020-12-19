@@ -15,29 +15,22 @@ def parse_rules(rules_lines):
 
     for line in rules_lines:
         num, rule = parse("{:d}: {}", line)
-        rules[num] = rule
+        rules[num] = rule.strip('"')
 
-    rules[8] = "42 | 42 8"
-    rules[11] = "42 31 | 42 11 31"
+    # No rule munging here - matches_rule_0 below hard codes the logic instead
     
     non_terminal = regex.compile(r'(\d+)')
-    
-    def has_non_loopy_nt(rule):
-        # Non terminals but ignore subbing rule 8 and 11 just yet
-        return any(m[0] not in ('8', '11') for m in non_terminal.finditer(rule))
 
     def nt_fill(match):
         sym = int(match[0])
-        return f'({rules[sym]})' if rules[sym] is not None and sym not in (8,11) else match[0] 
+        return f'({rules[sym]})' 
     
-    while any(has_non_loopy_nt(rule) for rule in rules.values()):
+    while any(non_terminal.search(rule) for rule in rules.values()):
         rules = {i:non_terminal.sub(nt_fill, rule) for i,rule in rules.items()}
 
-    rules = {i: ''.join(c for c in rule if not c.isspace() and c != '"') for i,rule in rules.items()}
+    rules = {i: ''.join(c for c in rule if not c.isspace()) for i,rule in rules.items()}
 
     return rules
-    #return re.compile(f"({rules[42]})({rules[42]})+({rules[31]})+")
-
 
 def matches_rule_0(rules, message):
     # Need some number of 42s followed by some smaller non-zero number of 31s
