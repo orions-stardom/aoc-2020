@@ -12,6 +12,7 @@ advent-of-code-data = "^0.8.5"
 python-dotenv = "^0.15.0"
 parse = "^1.18.0"
 more-itertools = "^8.6.0"
+regex = "^2020.11.13"
 
 [tool.poetry.dev-dependencies]
 

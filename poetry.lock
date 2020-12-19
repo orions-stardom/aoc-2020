@@ -372,7 +372,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a39c3b2268dad9b1931566cfc65339d640b4b108c0159dccd665b7c423ddf881"
+content-hash = "738cb52eebabd69ceecd5d136cddbcaacdb871168126092c92d1a416e9c3d1dd"
 
 [metadata.files]
 advent-of-code-data = [
