@@ -152,6 +152,11 @@ def calculate_neighbours(tiles):
 
                 break
 
+sea_monster_string = \
+'''                  # 
+#    ##    ##    ###
+ #  #  #  #  #  #   '''
+
 def solve(data):
     parsed=list(parse_all('Tile: {:n}:\n{}', data.split('\n\n')))
     tiles = {int(num): Tile.parse(int(num),tile) for num, tile in parse_all('Tile {:d}:\n{}', data.split('\n\n'))}
@@ -175,10 +180,19 @@ def solve(data):
         while len(row) < side_length:
             row.append(row[-1].right_neighbour)
         
-        rows.append(row)
         start = row[0].bottom_neighbour
+        # Strip borders of placed tiles
+        rows.append(np.hstack([r.data[1:-1,1:-1] for r in row]))
+    
+    picture = np.vstack(rows)
+    #print('\n'.join(''.join(row) for row in picture))
+
+    sea_monster = np.array(list(sea_monster_string.replace('\n',''))).reshape(3,20)
+    n_seamonsters = sum(((sea_monster == ' ') | (sea_monster == window)).all() for window in np.lib.stride_tricks.as_strided(picture, shape=sea_monster.shape))
 
     breakpoint()
+    return (picture == '#').sum() - (sea_monster == '#').sum()*n_seamonsters 
+    #breakpoint()
     
 
 @pytest.mark.parametrize('data,expect',
@@ -289,7 +303,7 @@ Tile 3079:
 #.#####.##
 ..#.###...
 ..#.......
-..#.###...''', 20899048083289)
+..#.###...''', 273)
     ])
 def test_solve(data, expect):
     assert solve(data) == expect
