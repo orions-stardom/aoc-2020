@@ -10,31 +10,25 @@ from pathlib import Path
 import itertools as it
 import regex
 
-def parse_rules(rules_lines):
-    rules = {}
-
-    for line in rules_lines:
-        num, rule = parse("{:d}: {}", line)
-        rules[num] = rule.strip('"')
-
+def parse_rules(rules):
+    rules = dict(line.replace('"','').split(': ') for line in rules.splitlines())
     # No rule munging here - matches_rule_0 below hard codes the logic instead
     
     non_terminal = regex.compile(r'(\d+)')
 
     def nt_fill(match):
-        sym = int(match[0])
-        return f'({rules[sym]})' 
+        return f'({rules[match[0]]})'
     
     while any(non_terminal.search(rule) for rule in rules.values()):
         rules = {i:non_terminal.sub(nt_fill, rule) for i,rule in rules.items()}
 
-    rules = {i: ''.join(c for c in rule if not c.isspace()) for i,rule in rules.items()}
+    rules = {i: rule.replace(' ', '') for i,rule in rules.items()}
 
     return rules
 
 def matches_rule_0(rules, message):
     # Need some number of 42s followed by some smaller non-zero number of 31s
-    m = regex.fullmatch(f"(?P<fourtytwo>{rules[42]}){{2,}}(?P<thirtyone>{rules[31]})+", message)
+    m = regex.fullmatch(f"(?P<fourtytwo>{rules['42']}){{2,}}(?P<thirtyone>{rules['31']})+", message)
 
     if m is None:
         return False
@@ -43,8 +37,8 @@ def matches_rule_0(rules, message):
     return len(matches['fourtytwo']) > len(matches['thirtyone'])
 
 def solve(data):
-    rules_string, messages = data.split('\n\n')
-    rules = parse_rules(rules_string.splitlines())
+    rules, messages = data.split('\n\n')
+    rules = parse_rules(rules)
     return sum(matches_rule_0(rules, message) for message in messages.splitlines())
 
 @pytest.mark.parametrize('data,expect',

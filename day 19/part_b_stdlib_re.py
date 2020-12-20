@@ -10,25 +10,19 @@ from pathlib import Path
 import itertools as it
 import re
 
-def parse_rules(rules_lines):
-    rules = {}
-
-    for line in rules_lines:
-        num, rule = parse("{:d}: {}", line)
-        rules[num] = rule.strip('"')
-   
+def parse_rules(rules):
+    rules = dict(line.replace("'",'').split(": ") for line in rules.splitlines())
     # No rule munging here - matches_rule_0 below hard codes the logic instead
     
     non_terminal = re.compile(r'(\d+)')
 
     def nt_fill(match):
-        sym = int(match[0])
-        return f'({rules[sym]})'
+        return f'({rules[match[0]]})'
     
     while any(non_terminal.search(rule) for rule in rules.values()):
         rules = {i:non_terminal.sub(nt_fill, rule) for i,rule in rules.items()}
 
-    rules = {i: ''.join(c for c in rule if not c.isspace()) for i,rule in rules.items()}
+    rules = {i: rule.replace(' ', '') for i,rule in rules.items()}
 
     return rules
 
@@ -51,11 +45,11 @@ def matches_rule_0(r42,r31, message):
     
 
 def solve(data):
-    rules_string, messages = data.split('\n\n')
-    rules = parse_rules(rules_string.splitlines())
+    rules, messages = data.split('\n\n')
+    rules = parse_rules(rules)
 
-    r42 = re.compile(rules[42])
-    r31 = re.compile(rules[31])
+    r42 = re.compile(rules['42'])
+    r31 = re.compile(rules['31'])
 
     return sum(matches_rule_0(r42, r31, message) for message in messages.splitlines())
 
