@@ -38,26 +38,24 @@ class Tile:
 
     @property
     def bottom_neighbour(self):
-        below = self._neighbours.down
+        below = self.all_tiles.get(self._neighbours.down, None)
         if below == None or self.bottom == below.top:
             return below
 
         for cand in below.orientations:
             if self.bottom == cand.top:
-                self._neighbours = self._neighbours._replace(down=cand)
                 return cand
 
         assert False, 'impossible'
 
     @property
     def right_neighbour(self):
-        right = self._neighbours.right
+        right = self.all_tiles.get(self._neighbours.right, None)
         if right == None or self.right == right.left:
             return right
 
         for cand in right.orientations:
             if self.right == cand.left:
-                self._neighbours = self._neighbours._replace(right=cand)
                 return cand
 
         assert False, 'impossible'
@@ -136,28 +134,29 @@ def parse_all(pattern, it):
 #return np.concatenate((a_orient[:,:-1],b_orient[:,1:]), axis=1)
 
 def calculate_neighbours(tiles):
-    found = collections.defaultdict(list)
+    # Each tile only carries the id of its neighbour, which is an index into this dict
+    # This indirection is needed because when we identify the neighbour we don't necesarily
+    # have all of the other neighbours, so a direct reference to the neighbour could go stale.
+    # So the tiles need to know about the dict, and we edit the values in there to appropriately 
+    # updates tiles.
+    # Don't do this at home
+    Tile.all_tiles = tiles
 
     for ida,idb in it.combinations(tiles, 2):
         for orienta, orientb in it.product(tiles[ida].orientations, tiles[idb].orientations):
-            # Since we're rotating we can just test a single edge, but
-            # we need to put the matching orientations back in the collection
-            # so the direction of adjacency is right.
-            # Stuff happening to existing neighbours as we rotate is handled by the class
-
             if orienta.right == orientb.left:
-                orienta._neighbours = orienta._neighbours._replace(right=orientb)
-                orientb._neighbours = orientb._neighbours._replace(left=orienta)
+                orienta._neighbours = orienta._neighbours._replace(right=idb)
+                orientb._neighbours = orientb._neighbours._replace(left=ida)
                 tiles[ida] = orienta
                 tiles[idb] = orientb
 
                 break
 
-    breakpoint()
-
 def solve(data):
     parsed=list(parse_all('Tile: {:n}:\n{}', data.split('\n\n')))
     tiles = {int(num): Tile.parse(int(num),tile) for num, tile in parse_all('Tile {:d}:\n{}', data.split('\n\n'))}
+    
+    Tile.all_tiles = tiles
     calculate_neighbours(tiles)
     
     # We don't know the orientation of the picture yet, so just 
@@ -168,16 +167,18 @@ def solve(data):
     oriented_top_left = mit.first(o for o in top_left.orientations if None not in (o.bottom_neighbour, o.right_neighbour))
     
     side_length = int(math.sqrt(len(tiles)))
+
+    rows = []
+    start = oriented_top_left
+    while len(rows) < side_length:
+        row = [start]
+        while len(row) < side_length:
+            row.append(row[-1].right_neighbour)
+        
+        rows.append(row)
+        start = row[0].bottom_neighbour
+
     breakpoint()
-
-    row = [top_left]
-    while len(row) < side_length:
-        row.append(row[-1].right_neighbour)
-
-    row_by_id = [t.id for t in row]
-
-    breakpoint()
-    #_, picture = build_picture(tiles, neighbourhood)
     
 
 @pytest.mark.parametrize('data,expect',
