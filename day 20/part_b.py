@@ -20,7 +20,8 @@ import math
 class Tile:
     @classmethod
     def parse(cls, id, string):
-        data = np.array(list(string.replace('\n',''))).reshape(10,10) 
+        rows, cols = len(string.splitlines()), len(string.splitlines()[0])
+        data = np.array(list(string.replace('\n',''))).reshape(rows, cols) 
         return cls(id, data)
 
     def __init__(self, id, data):
@@ -131,8 +132,6 @@ class Neighbour(NamedTuple):
 def parse_all(pattern, it):
      return (parse(pattern, thing) for thing in it)
 
-#return np.concatenate((a_orient[:,:-1],b_orient[:,1:]), axis=1)
-
 def calculate_neighbours(tiles):
     # Each tile only carries the id of its neighbour, which is an index into this dict
     # This indirection is needed because when we identify the neighbour we don't necesarily
@@ -184,16 +183,27 @@ def solve(data):
         # Strip borders of placed tiles
         rows.append(np.hstack([r.data[1:-1,1:-1] for r in row]))
     
-    picture = np.vstack(rows)
-    #print('\n'.join(''.join(row) for row in picture))
+    picture = Tile('picture', np.vstack(rows))
 
-    sea_monster = np.array(list(sea_monster_string.replace('\n',''))).reshape(3,20)
-    n_seamonsters = sum(((sea_monster == ' ') | (sea_monster == window)).all() for window in np.lib.stride_tricks.as_strided(picture, shape=sea_monster.shape))
+    sea_monster = Tile.parse('AHHH!', sea_monster_string)
+    n_seamonsters = sum(((sea_monster.data == ' ') | (sea_monster.data == window)).all() 
+                        for opicture in picture.orientations
+                        for window in np_windows(opicture.data, sea_monster.data.shape)
+                        )
 
-    breakpoint()
-    return (picture == '#').sum() - (sea_monster == '#').sum()*n_seamonsters 
-    #breakpoint()
-    
+    # The above seems to reliably double count all the sea monsters and I don't really
+    # know why..
+    return (picture.data == '#').sum() - (sea_monster.data == '#').sum()*int(n_seamonsters / 2)
+   
+def np_windows(data, shape):
+    # This is horrible and there's lots of vectorised solutions on the internet
+    # but I didn't understand how to use them
+    w_height, w_width = shape
+    d_height, d_width = data.shape
+    for y in range(d_height - w_height):
+        for x in range(d_width - w_width):
+            yield data[y:y+w_height,x:x+w_width]
+
 
 @pytest.mark.parametrize('data,expect',
     # INSERT TEST CASES HERE
@@ -321,5 +331,5 @@ if __name__ == '__main__':
     data = aocd.get_data(year=year, day=day)
     solution = solve(data)
     print("Solution: ", solution, sep="\n")
-    #aocd.submit(solution, year=year, day=day, part=part, reopen=False)
+    aocd.submit(solution, year=year, day=day, part=part, reopen=False)
 
