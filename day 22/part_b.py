@@ -15,6 +15,9 @@ import copy
 def parse_deck(string):
     return deque(int(l) for l in string.splitlines()[1:])
 
+def score(deck):
+    return sum(i*c for i,c in enumerate(reversed(deck), start=1))
+
 def solve(data):
     if isinstance(data, str):
         decks = [parse_deck(p) for p in data.split('\n\n')]
@@ -26,7 +29,7 @@ def solve(data):
     seen_states = set()
 
     while all(decks):
-        state = tuple(tuple(deck) for deck in decks)
+        state = tuple(score(deck) for deck in decks)
         if state in seen_states:
             winning_deck = 0
             break
@@ -47,7 +50,7 @@ def solve(data):
     
     if calc_score:
         #breakpoint()
-        return sum(i*c for i,c in enumerate(reversed(decks[winning_deck]), start=1))
+        return score(decks[winning_deck])
     else:
         return winning_deck
 
