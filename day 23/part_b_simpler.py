@@ -1,10 +1,10 @@
-from dotenv import load_dotenv; load_dotenv()
+#from dotenv import load_dotenv; load_dotenv()
 
-import aocd
+#import aocd
 import pytest
 import sys
 
-from parse import parse
+#from parse import parse
 from pathlib import Path
 
 import more_itertools as mit
@@ -57,12 +57,12 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # aocd's filename introspection doesn't fit my naming conventions
-    f = Path(__file__).absolute()    
-    year, day, part = parse("aoc-{:d}", f.parent.parent.name)[0], \
-                      parse("day {:d}", f.parent.name)[0], \
-                      parse("part_{}.py", f.name)[0]
-    data = aocd.get_data(year=year, day=day)
-    solution = solve(data)
+    #kf = Path(__file__).absolute()    
+    #year, day, part = parse("aoc-{:d}", f.parent.parent.name)[0], \
+    #                  parse("day {:d}", f.parent.name)[0], \
+    #                  parse("part_{}.py", f.name)[0]
+    #data = aocd.get_data(year=year, day=day)
+    solution = solve('853192647')
     print("Solution: \n", solution)
     #aocd.submit(solution, year=year, day=day, part=part, reopen=False)
 
