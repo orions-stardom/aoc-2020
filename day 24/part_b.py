@@ -8,6 +8,8 @@ from parse import parse
 from pathlib import Path
 
 import re
+import more_itertools as mit
+from collections import Counter
 
 directions = {
     'e':  (+1, 0, -1),
@@ -35,23 +37,20 @@ def initial(data):
     return tiles
 
 def neighbours(tile):
-    return {tuple(c1+c2 for c1,c2 in zip(tile,d)) for d in directions.values()}
+    return (tuple(c1+c2 for c1,c2 in zip(tile,d)) for d in directions.values())
 
-def all_neighbours(tiles):
-    return tiles.union(*(neighbours(t) for t in tiles)) 
+def evolve(tiles):
+    new_tiles = set()
+    white_tiles = Counter()
 
-def evolve(black_tiles):
-    new_tiles = black_tiles.copy()
+    for tile in tiles:
+        white_neighbours, black_neighbours = mit.partition(tiles.__contains__, neighbours(tile))
+        white_tiles.update(white_neighbours)
 
-    for tile in all_neighbours(black_tiles):
-        black_neighbours = len(neighbours(tile) & black_tiles)
-
-        if tile in black_tiles and (black_neighbours == 0 or black_neighbours > 2):
-            new_tiles.remove(tile)
-
-        if tile not in black_tiles and black_neighbours == 2:
+        if 0 < mit.ilen(black_neighbours) <= 2:
             new_tiles.add(tile)
-    
+
+    new_tiles.update(t for t in white_tiles if white_tiles[t] == 2)
     return new_tiles
 
 def solve(data):
