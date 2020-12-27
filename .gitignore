@@ -1,2 +1,5 @@
 __pycache__/
+__pypackages__/
 .env
+*.egg-info
+.pdm.toml
