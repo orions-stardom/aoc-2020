@@ -14,19 +14,6 @@ tzlocal = "*"
 colorama = {marker = "platform_system == 'Windows'", version = "*"}
 
 [[package]]
-name = "atomicwrites"
-sections = ["default"]
-version = "1.4.0"
-marker = "sys_platform == 'win32'"
-summary = "Atomic file writes."
-
-[[package]]
-name = "attrs"
-sections = ["default"]
-version = "20.3.0"
-summary = "Classes Without Boilerplate"
-
-[[package]]
 name = "beautifulsoup4"
 sections = ["default"]
 version = "4.9.3"
@@ -51,7 +38,7 @@ summary = "Universal encoding detector for Python 2 and 3"
 name = "colorama"
 sections = ["default"]
 version = "0.4.4"
-marker = "platform_system == 'Windows' or sys_platform == 'win32'"
+marker = "platform_system == 'Windows'"
 summary = "Cross-platform colored terminal text."
 
 [[package]]
@@ -67,21 +54,10 @@ version = "2.10"
 summary = "Internationalized Domain Names in Applications (IDNA)"
 
 [[package]]
-name = "importlib-metadata"
+name = "invoke"
 sections = ["default"]
-version = "3.3.0"
-marker = "python_version < '3.8'"
-summary = "Read metadata from Python packages"
-
-[package.dependencies]
-zipp = ">=0.5"
-typing-extensions = {marker = "python_version < '3.8'", version = ">=3.6.4"}
-
-[[package]]
-name = "iniconfig"
-sections = ["default"]
-version = "1.1.1"
-summary = "iniconfig: brain-dead simple config-ini parsing"
+version = "1.4.1"
+summary = "Pythonic task execution"
 
 [[package]]
 name = "more-itertools"
@@ -96,15 +72,6 @@ version = "1.19.4"
 summary = "NumPy is the fundamental package for array computing with Python."
 
 [[package]]
-name = "packaging"
-sections = ["default"]
-version = "20.8"
-summary = "Core utilities for Python packages"
-
-[package.dependencies]
-pyparsing = ">=2.0.2"
-
-[[package]]
 name = "parse"
 sections = ["default"]
 version = "1.18.0"
@@ -115,44 +82,6 @@ name = "pebble"
 sections = ["default"]
 version = "4.6.0"
 summary = "Threading and multiprocessing eye-candy."
-
-[[package]]
-name = "pluggy"
-sections = ["default"]
-version = "0.13.1"
-summary = "plugin and hook calling mechanisms for python"
-
-[package.dependencies]
-importlib-metadata = {marker = "python_version < '3.8'", version = ">=0.12"}
-
-[[package]]
-name = "py"
-sections = ["default"]
-version = "1.10.0"
-summary = "library with cross-python path, ini-parsing, io, code, log facilities"
-
-[[package]]
-name = "pyparsing"
-sections = ["default"]
-version = "2.4.7"
-summary = "Python parsing module"
-
-[[package]]
-name = "pytest"
-sections = ["default"]
-version = "6.2.1"
-summary = "pytest: simple powerful testing with Python"
-
-[package.dependencies]
-attrs = ">=19.2.0"
-iniconfig = "*"
-packaging = "*"
-pluggy = "<1.0.0a1,>=0.12"
-py = ">=1.8.2"
-toml = "*"
-importlib-metadata = {marker = "python_version < '3.8'", version = ">=0.12"}
-atomicwrites = {marker = "sys_platform == 'win32'", version = ">=1.0"}
-colorama = {marker = "sys_platform == 'win32'", version = "*"}
 
 [[package]]
 name = "python-dateutil"
@@ -213,19 +142,6 @@ version = "1.1.0"
 summary = "ANSII Color formatting for output in terminal."
 
 [[package]]
-name = "toml"
-sections = ["default"]
-version = "0.10.2"
-summary = "Python Library for Tom's Obvious, Minimal Language"
-
-[[package]]
-name = "typing-extensions"
-sections = ["default"]
-version = "3.7.4.3"
-marker = "python_version < '3.8'"
-summary = "Backported and Experimental Type Hints for Python 3.5+"
-
-[[package]]
 name = "tzlocal"
 sections = ["default"]
 version = "2.1"
@@ -240,28 +156,13 @@ sections = ["default"]
 version = "1.26.2"
 summary = "HTTP library with thread-safe connection pooling, file post, and more."
 
-[[package]]
-name = "zipp"
-sections = ["default"]
-version = "3.4.0"
-marker = "python_version < '3.8'"
-summary = "Backport of pathlib-compatible object wrapper for zip files"
-
 [metadata]
 lock_version = "2"
-content_hash = "sha256:9fdec13a0505f040e966d8313a9bafde5d9ada8a936ea702584f2d74d1409d53"
+content_hash = "sha256:c59b33dfc3d01ea19954969f95607851deb23522637da05ba3a2d466f5b6b4fe"
 
 [metadata.files]
 "advent-of-code-data 0.9.7" = [
     {file = "advent_of_code_data-0.9.7-py2.py3-none-any.whl", hash = "sha256:259b4a166f26cc24129e5f034c9deec7c01b17c0bb336323f12db12c2307abdd"},
-]
-"atomicwrites 1.4.0" = [
-    {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
-    {file = "atomicwrites-1.4.0.tar.gz", hash = "sha256:ae70396ad1a434f9c7046fd2dd196fc04b12f9e91ffb859164193be8b6168a7a"},
-]
-"attrs 20.3.0" = [
-    {file = "attrs-20.3.0-py2.py3-none-any.whl", hash = "sha256:31b2eced602aa8423c2aea9c76a724617ed67cf9513173fd3a4f03e3a929c7e6"},
-    {file = "attrs-20.3.0.tar.gz", hash = "sha256:832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"},
 ]
 "beautifulsoup4 4.9.3" = [
     {file = "beautifulsoup4-4.9.3-py2-none-any.whl", hash = "sha256:4c98143716ef1cb40bf7f39a8e3eec8f8b009509e74904ba3a7b315431577e35"},
@@ -288,13 +189,10 @@ content_hash = "sha256:9fdec13a0505f040e966d8313a9bafde5d9ada8a936ea702584f2d74d
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
     {file = "idna-2.10.tar.gz", hash = "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"},
 ]
-"importlib-metadata 3.3.0" = [
-    {file = "importlib_metadata-3.3.0-py3-none-any.whl", hash = "sha256:bf792d480abbd5eda85794e4afb09dd538393f7d6e6ffef6e9f03d2014cf9450"},
-    {file = "importlib_metadata-3.3.0.tar.gz", hash = "sha256:5c5a2720817414a6c41f0a49993908068243ae02c1635a228126519b509c8aed"},
-]
-"iniconfig 1.1.1" = [
-    {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
-    {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
+"invoke 1.4.1" = [
+    {file = "invoke-1.4.1-py2-none-any.whl", hash = "sha256:93e12876d88130c8e0d7fd6618dd5387d6b36da55ad541481dfa5e001656f134"},
+    {file = "invoke-1.4.1-py3-none-any.whl", hash = "sha256:87b3ef9d72a1667e104f89b159eaf8a514dbf2f3576885b2bbdefe74c3fb2132"},
+    {file = "invoke-1.4.1.tar.gz", hash = "sha256:de3f23bfe669e3db1085789fd859eb8ca8e0c5d9c20811e2407fa042e8a5e15d"},
 ]
 "more-itertools 8.6.0" = [
     {file = "more_itertools-8.6.0-py3-none-any.whl", hash = "sha256:8e1a2a43b2f2727425f2b5839587ae37093f19153dc26c0927d1048ff6557330"},
@@ -336,32 +234,12 @@ content_hash = "sha256:9fdec13a0505f040e966d8313a9bafde5d9ada8a936ea702584f2d74d
     {file = "numpy-1.19.4-pp36-pypy36_pp73-manylinux2010_x86_64.whl", hash = "sha256:2a2740aa9733d2e5b2dfb33639d98a64c3b0f24765fed86b0fd2aec07f6a0a08"},
     {file = "numpy-1.19.4.zip", hash = "sha256:141ec3a3300ab89c7f2b0775289954d193cc8edb621ea05f99db9cb181530512"},
 ]
-"packaging 20.8" = [
-    {file = "packaging-20.8-py2.py3-none-any.whl", hash = "sha256:24e0da08660a87484d1602c30bb4902d74816b6985b93de36926f5bc95741858"},
-    {file = "packaging-20.8.tar.gz", hash = "sha256:78598185a7008a470d64526a8059de9aaa449238f280fc9eb6b13ba6c4109093"},
-]
 "parse 1.18.0" = [
     {file = "parse-1.18.0.tar.gz", hash = "sha256:91666032d6723dc5905248417ef0dc9e4c51df9526aaeef271eacad6491f06a4"},
 ]
 "pebble 4.6.0" = [
     {file = "Pebble-4.6.0-py2.py3-none-any.whl", hash = "sha256:21e633241534e580d6cd01d45f725ad70e7a0749c26dd3433cb080f7f78f4ba0"},
     {file = "Pebble-4.6.0.tar.gz", hash = "sha256:10bd8c42573b05c78ad280ce2e53fb892d8fd7405dac3419ed09b95c8f2ba928"},
-]
-"pluggy 0.13.1" = [
-    {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
-    {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
-]
-"py 1.10.0" = [
-    {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
-    {file = "py-1.10.0.tar.gz", hash = "sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3"},
-]
-"pyparsing 2.4.7" = [
-    {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
-    {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
-]
-"pytest 6.2.1" = [
-    {file = "pytest-6.2.1-py3-none-any.whl", hash = "sha256:1969f797a1a0dbd8ccf0fecc80262312729afea9c17f1d70ebf85c5e76c6f7c8"},
-    {file = "pytest-6.2.1.tar.gz", hash = "sha256:66e419b1899bc27346cb2c993e12c5e5e8daba9073c1fbce33b9807abc95c306"},
 ]
 "python-dateutil 2.8.1" = [
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
@@ -433,15 +311,6 @@ content_hash = "sha256:9fdec13a0505f040e966d8313a9bafde5d9ada8a936ea702584f2d74d
 "termcolor 1.1.0" = [
     {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
 ]
-"toml 0.10.2" = [
-    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
-    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
-]
-"typing-extensions 3.7.4.3" = [
-    {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
-    {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
-    {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
-]
 "tzlocal 2.1" = [
     {file = "tzlocal-2.1-py2.py3-none-any.whl", hash = "sha256:e2cb6c6b5b604af38597403e9852872d7f534962ae2954c7f35efcb1ccacf4a4"},
     {file = "tzlocal-2.1.tar.gz", hash = "sha256:643c97c5294aedc737780a49d9df30889321cbe1204eac2c2ec6134035a92e44"},
@@ -449,8 +318,4 @@ content_hash = "sha256:9fdec13a0505f040e966d8313a9bafde5d9ada8a936ea702584f2d74d
 "urllib3 1.26.2" = [
     {file = "urllib3-1.26.2-py2.py3-none-any.whl", hash = "sha256:d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473"},
     {file = "urllib3-1.26.2.tar.gz", hash = "sha256:19188f96923873c92ccb987120ec4acaa12f0461fa9ce5d3d0772bc965a39e08"},
-]
-"zipp 3.4.0" = [
-    {file = "zipp-3.4.0-py3-none-any.whl", hash = "sha256:102c24ef8f171fd729d46599845e95c7ab894a4cf45f5de11a44cc7444fb1108"},
-    {file = "zipp-3.4.0.tar.gz", hash = "sha256:ed5eee1974372595f9e416cc7bbeeb12335201d8081ca8a0743c954d4446e5cb"},
 ]
